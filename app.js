@@ -1,14 +1,10 @@
 const Koa = require('koa');
-const Router = require('koa-router');
 const serve = require('koa-static');
 
-const app = new Koa();
-const router = new Router();
+const router = require('./src/server/router');
 
-router.get('/healthz', ctx => { ctx.status = 200; });
-
-app.use(router.routes());
-
-app.use(serve('public'));
+const app = new Koa()
+  .use(router.routes())
+  .use(serve('dist'));
 
 app.listen(3000);
