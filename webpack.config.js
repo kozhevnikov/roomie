@@ -15,7 +15,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin('dist'),
     new HtmlWebpackPlugin({
-      template: './src/client/index.html'
+      template: 'src/client/index.html'
     })
   ]
 };
