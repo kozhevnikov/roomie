@@ -13,10 +13,10 @@ anonymous.get('/login', passport.authenticate('google', {
   scope: 'email'
 }));
 
-anonymous.get('/login/callback', passport.authenticate('google', {
-  successRedirect: '/',
+anonymous.get('/login/callback', ctx => passport.authenticate('google', {
+  successRedirect: ctx.session.redirect || '/',
   failureRedirect: '/login'
-}));
+})(ctx));
 
 authenticated.get('/logout', (ctx) => {
   ctx.logout();

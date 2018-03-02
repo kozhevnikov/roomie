@@ -19,7 +19,7 @@ app.use(async (ctx, next) => {
     logger.log(
       ctx.isAuthenticated() ? 'info' : 'debug',
       ctx.method,
-      ctx.path,
+      ctx.url,
       ctx.isAuthenticated() ? ctx.state.user.email : 'anonymous',
       ctx.request.ip,
       ctx.headers['user-agent']
@@ -37,7 +37,10 @@ app.use(router.anonymous.routes());
 
 app.use(async (ctx, next) => {
   if (ctx.isAuthenticated()) await next();
-  else ctx.redirect('/login');
+  else {
+    ctx.session.redirect = ctx.request.url;
+    ctx.redirect('/login');
+  }
 });
 
 app.use(router.authenticated.routes());
