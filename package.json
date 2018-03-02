@@ -9,14 +9,15 @@
   "scripts": {
     "build": "webpack",
     "start": "node app.js",
-    "watch": "npm run watch-client & npm run watch-server",
-    "watch-client": "webpack --watch",
-    "watch-server": "nodemon --delay 1 app.js"
+    "watch": "npm run client & npm run server",
+    "client": "webpack --watch",
+    "server": "nodemon app.js"
   },
   "dependencies": {
     "koa": "^2.5.0",
     "koa-router": "^7.4.0",
-    "koa-static": "^4.0.2"
+    "koa-static": "^4.0.2",
+    "vue": "^2.5.13"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.18",
