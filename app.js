@@ -1,16 +1,29 @@
 const Koa = require('koa');
 const send = require('koa-send');
 const serve = require('koa-static');
+const session = require('koa-session');
 
 const { logger, router, passport } = require('./src/server');
+const config = require('./config/config');
 
 const app = new Koa();
 
+app.keys = [config.session];
 app.proxy = true;
+
+app.use(session({ maxAge: 7 * 24 * 60 * 60 * 1000 }, app));
+app.use(passport.initialize()).use(passport.session());
 
 app.use(async (ctx, next) => {
   try {
-    logger.debug(ctx.method, ctx.path, ctx.request.ip, ctx.headers['user-agent']);
+    logger.log(
+      ctx.isAuthenticated() ? 'info' : 'debug',
+      ctx.method,
+      ctx.path,
+      ctx.isAuthenticated() ? ctx.state.user.email : 'anonymous',
+      ctx.request.ip,
+      ctx.headers['user-agent']
+    );
     await next();
   }
   catch (error) {
@@ -19,8 +32,6 @@ app.use(async (ctx, next) => {
     ctx.body = error.toString();
   }
 });
-
-app.use(passport.initialize());
 
 app.use(router.anonymous.routes());
 

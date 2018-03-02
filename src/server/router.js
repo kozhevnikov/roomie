@@ -18,4 +18,9 @@ anonymous.get('/login/callback', passport.authenticate('google', {
   failureRedirect: '/login'
 }));
 
+authenticated.get('/logout', (ctx) => {
+  ctx.logout();
+  ctx.redirect('/');
+});
+
 module.exports = { anonymous, authenticated };
