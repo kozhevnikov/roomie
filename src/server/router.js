@@ -1,8 +1,21 @@
 const Router = require('koa-router');
 
-const router = new Router();
+const passport = require('./passport');
+
+const anonymous = new Router();
+const authenticated = new Router();
 
 /** @see https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#define-a-liveness-http-request */
-router.get('/healthz', ctx => { ctx.status = 200; });
+anonymous.get('/healthz', ctx => { ctx.status = 200; });
 
-module.exports = router;
+/** @see http://www.passportjs.org/docs/google/#routes */
+anonymous.get('/login', passport.authenticate('google', {
+  scope: 'email'
+}));
+
+anonymous.get('/login/callback', passport.authenticate('google', {
+  successRedirect: '/',
+  failureRedirect: '/login'
+}));
+
+module.exports = { anonymous, authenticated };
