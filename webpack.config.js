@@ -7,6 +7,11 @@ module.exports = {
   output: {
     filename: 'bundle.js'
   },
+  module: {
+    rules: [
+      { test: /\.vue$/, loader: 'vue-loader' }
+    ]
+  },
   plugins: [
     new CleanWebpackPlugin('dist'),
     new HtmlWebpackPlugin({
