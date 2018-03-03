@@ -25,8 +25,7 @@ app.use(async (ctx, next) => {
       ctx.headers['user-agent']
     );
     await next();
-  }
-  catch (error) {
+  } catch (error) {
     logger.error(error);
     ctx.status = error.code || 500;
     ctx.body = error.toString();
@@ -45,7 +44,7 @@ app.use(async (ctx, next) => {
 
 app.use(router.authenticated.routes());
 
-app.use(serve('dist')).use(async ctx => await send(ctx, 'dist/index.html'));
+app.use(serve('dist')).use(ctx => send(ctx, 'dist/index.html'));
 
 app.listen(3000);
 

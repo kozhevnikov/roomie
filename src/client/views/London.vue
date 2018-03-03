@@ -8,11 +8,11 @@
 </template>
 
 <script>
-  import Room from '../components/Room.vue';
+import Room from '../components/Room.vue';
 
-  export default {
-    components: {
-      Room
-    }
+export default {
+  components: {
+    Room
   }
+};
 </script>
