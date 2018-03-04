@@ -11,8 +11,6 @@
 import Room from '../components/Room.vue';
 
 export default {
-  components: {
-    Room
-  }
+  components: { Room }
 };
 </script>

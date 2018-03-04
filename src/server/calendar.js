@@ -40,7 +40,14 @@ async function events(id, date = Date.now()) {
 
   return {
     name: data.summary,
-    ...data
+    events: data.items.map(item => ({
+      id: item.id,
+      name: item.summary,
+      href: item.htmlLink,
+      start: item.start.dateTime,
+      end: item.end.dateTime
+    })),
+    ...data // TODO Remove
   };
 }
 
