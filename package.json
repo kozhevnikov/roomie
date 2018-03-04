@@ -58,7 +58,8 @@
         "never"
       ],
       "function-paren-newline": "off",
-      "no-shadow": "off"
+      "no-shadow": "off",
+      "vue/max-attributes-per-line": "off"
     }
   },
   "eslintIgnore": [

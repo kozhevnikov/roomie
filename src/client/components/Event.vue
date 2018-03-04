@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a :href="event.href">{{ start }} - {{ end }} {{ event.name }}</a>
+    <a :href="event.href" target="_blank">{{ start }} - {{ end }} {{ event.name }}</a>
   </div>
 </template>
 

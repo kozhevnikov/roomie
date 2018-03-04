@@ -1,12 +1,8 @@
 <template>
   <div>
-    <h1>{{ name }}</h1>
+    <h1><a :href="href" target="_blank">{{ name }}</a></h1>
     <div v-if="events">
-      <Event
-        v-for="event in events"
-        :key="event.id"
-        :event="event"
-      />
+      <Event v-for="event in events" :key="event.id" :event="event"/>
     </div>
     <div v-else>
       {{ message }}
@@ -40,6 +36,7 @@ export default {
     if (response.ok) {
       const data = await response.json();
       this.name = data.name;
+      this.href = data.href;
       this.events = data.events;
     } else {
       this.name = response.statusText;
