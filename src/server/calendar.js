@@ -38,16 +38,25 @@ async function events(id, date = Date.now()) {
     });
   });
 
+  const items = data.items
+    .filter(item => item.status === 'confirmed')
+    .filter((item) => {
+      if (item.organizer && item.organizer.self) return true;
+      if (item.attendees && item.attendees.some(attendee => attendee.self)) {
+        return item.attendees.find(attendee => attendee.self).responseStatus === 'accepted';
+      }
+      return true;
+    });
+
   return {
     name: data.summary,
-    events: data.items.map(item => ({
+    events: items.map(item => ({
       id: item.id,
       name: item.summary || (item.visibility === 'private' ? 'busy' : '(No title)'),
       href: item.htmlLink,
       start: item.start.dateTime,
       end: item.end.dateTime
-    })),
-    ...data // TODO Remove
+    }))
   };
 }
 
