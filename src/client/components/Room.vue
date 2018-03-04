@@ -1,11 +1,13 @@
 <template>
-  <div>
-    <h1><a :href="href" target="_blank">{{ name }}</a></h1>
-    <div v-if="events">
-      <Event v-for="event in events" :key="event.id" :event="event"/>
-    </div>
-    <div v-else>
-      {{ message }}
+  <div class="room">
+    <div class="card">
+      <a :href="href" target="_blank">{{ name }}</a>
+      <div v-if="events">
+        <Event v-for="event in events" :key="event.id" :event="event"/>
+      </div>
+      <div v-else>
+        {{ message }}
+      </div>
     </div>
   </div>
 </template>
@@ -24,6 +26,7 @@ export default {
     return {
       name: 'Loading...',
       message: 'Loading...',
+      href: null,
       events: null
     };
   },
@@ -35,13 +38,24 @@ export default {
 
     if (response.ok) {
       const data = await response.json();
-      this.name = data.name;
-      this.href = data.href;
-      this.events = data.events;
+      Object.assign(this, data);
     } else {
       this.name = response.statusText;
       this.message = await response.text();
+      this.events = null;
     }
+  },
+
+  updated() {
+    this.$emit('macy');
   }
 };
 </script>
+
+<style>
+  .card {
+    border: 1px solid lightgray;
+    margin: 0.5em;
+    padding: 1em;
+  }
+</style>
