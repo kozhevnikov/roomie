@@ -4,6 +4,7 @@ dist/
 
 # Google
 client_secret.json
+tokens.json
 
 # JetBrains
 .idea/
