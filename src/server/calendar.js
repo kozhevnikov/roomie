@@ -42,7 +42,7 @@ async function events(id, date = Date.now()) {
     name: data.summary,
     events: data.items.map(item => ({
       id: item.id,
-      name: item.summary,
+      name: item.summary || (item.visibility === 'private' ? 'busy' : '(No title)'),
       href: item.htmlLink,
       start: item.start.dateTime,
       end: item.end.dateTime
