@@ -1,7 +1,7 @@
 {
   "name": "roomie",
   "version": "2.0.0",
-  "description": "Google Calendar Meeting Rooms Dashboard",
+  "description": "Meeting Rooms Dashboard for Google Calendar",
   "main": "app.js",
   "repository": "https://github.com/kozhevnikov/roomie",
   "author": "Ilya Kozhevnikov <git@kozhevnikov.com>",
@@ -15,6 +15,7 @@
     "server": "nodemon app.js"
   },
   "dependencies": {
+    "convict": "^4.0.2",
     "google-auth-library": "^1.3.1",
     "googleapis": "^27.0.0",
     "koa": "^2.5.0",
@@ -26,26 +27,26 @@
     "macy": "^2.3.0",
     "moment": "^2.21.0",
     "passport-google-oauth": "^1.0.0",
-    "vue": "^2.5.13",
+    "vue": "^2.5.15",
     "vue-material": "^1.0.0-beta-8",
     "vue-router": "^3.0.1",
-    "winston": "^2.4.0"
+    "winston": "^3.0.0-rc2"
   },
   "devDependencies": {
-    "clean-webpack-plugin": "^0.1.18",
+    "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^0.28.10",
     "eslint": "^4.18.2",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-vue": "^4.3.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
-    "html-webpack-plugin": "^3.0.4",
+    "html-webpack-plugin": "^3.0.6",
     "nodemon": "^1.17.1",
     "opn": "^5.2.0",
-    "vue-loader": "^14.1.1",
-    "vue-template-compiler": "^2.5.13",
-    "webpack": "^4.1.0",
-    "webpack-cli": "^2.0.10"
+    "vue-loader": "^14.2.1",
+    "vue-template-compiler": "^2.5.15",
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.11"
   },
   "eslintConfig": {
     "extends": [
@@ -60,8 +61,8 @@
         "error",
         "never"
       ],
-      "function-paren-newline": "off",
       "no-shadow": "off",
+      "object-curly-newline": "off",
       "vue/max-attributes-per-line": "off"
     }
   },

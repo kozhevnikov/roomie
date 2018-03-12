@@ -1,12 +1,13 @@
 const passport = require('koa-passport');
 const { OAuth2Strategy } = require('passport-google-oauth');
 
+const config = require('./config');
 const logger = require('./logger');
-const secret = require('../../config/client_secret');
 
+const web = config.get('web');
 const options = {
-  clientID: secret.web.client_id,
-  clientSecret: secret.web.client_secret,
+  clientID: web.client_id,
+  clientSecret: web.client_secret,
   callbackURL: '/login/callback'
 };
 

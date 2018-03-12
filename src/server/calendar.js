@@ -1,20 +1,20 @@
 const { google } = require('googleapis');
 const { OAuth2Client } = require('google-auth-library');
 
-const secret = require('../../config/client_secret');
-const tokens = require('../../config/tokens');
-
-const client = new OAuth2Client(
-  secret.installed.client_id,
-  secret.installed.client_secret,
-  secret.installed.redirect_uris[0]
-);
-
-client.setCredentials(tokens);
+const config = require('./config');
 
 const calendar = google.calendar('v3');
+const installed = config.get('installed');
+const tokens = config.get('tokens');
 
-async function events(id, date = Date.now()) {
+const client = new OAuth2Client(
+  installed.client_id,
+  installed.client_secret,
+  installed.redirect_uris[0]
+);
+client.setCredentials(tokens);
+
+exports.events = async (id, date = Date.now()) => {
   const timeMin = new Date(date);
   timeMin.setHours(0, 0, 0, 0);
 
@@ -59,6 +59,4 @@ async function events(id, date = Date.now()) {
       end: item.end.dateTime
     }))
   };
-}
-
-module.exports = { events };
+};

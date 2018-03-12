@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 /* eslint-disable no-console,import/no-extraneous-dependencies */
 const { OAuth2Client } = require('google-auth-library');
+const { readFileSync, writeFileSync } = require('fs');
 const { createInterface } = require('readline');
-const { writeFileSync } = require('fs');
 const opn = require('opn');
 
-const secret = require('../config/client_secret');
+const secret = JSON.parse(readFileSync('client_secret.json'));
 
 async function token() {
   const client = new OAuth2Client(
@@ -20,7 +20,6 @@ async function token() {
   });
 
   console.log('Open', url);
-
   opn(url, { wait: false });
 
   const readline = createInterface({
@@ -36,8 +35,9 @@ async function token() {
   });
 
   const response = await client.getToken(code);
+  secret.tokens = response.tokens;
 
-  writeFileSync(`${__dirname}/../config/tokens.json`, JSON.stringify(response.tokens, null, 2));
+  writeFileSync('client_secret.json', JSON.stringify(secret, null, 2));
 
   console.log('Done');
 }

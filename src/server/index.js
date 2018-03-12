@@ -1,11 +1,11 @@
+const config = require('./config');
 const logger = require('./logger');
 const router = require('./router');
 const passport = require('./passport');
-const calendar = require('./calendar');
 
 module.exports = {
+  config,
   logger,
   router,
-  passport,
-  calendar
+  passport
 };

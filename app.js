@@ -3,30 +3,29 @@ const send = require('koa-send');
 const serve = require('koa-static');
 const session = require('koa-session');
 
-const { logger, router, passport } = require('./src/server');
-const config = require('./config/config');
+const { config, logger, router, passport } = require('./src/server');
+
+function log(ctx) {
+  const level = ctx.isAuthenticated() ? 'info' : 'debug';
+  const email = ctx.isAuthenticated() ? ctx.state.user.email : 'anonymous';
+  logger.log(level, `${ctx.method} ${ctx.url} ${email} ${ctx.ip} ${ctx.headers['user-agent']}`);
+}
 
 const app = new Koa();
 
-app.keys = [config.session];
+app.keys = [config.get('session.key')];
 app.proxy = true;
 
-app.use(session({ maxAge: 7 * 24 * 60 * 60 * 1000 }, app));
+app.use(session({ maxAge: config.get('session.age') }, app));
+
 app.use(passport.initialize()).use(passport.session());
 
 app.use(async (ctx, next) => {
   try {
-    logger.log(
-      ctx.isAuthenticated() ? 'info' : 'debug',
-      ctx.method,
-      ctx.url,
-      ctx.isAuthenticated() ? ctx.state.user.email : 'anonymous',
-      ctx.request.ip,
-      ctx.headers['user-agent']
-    );
+    log(ctx);
     await next();
   } catch (error) {
-    logger.error(error);
+    logger.error('%O', error);
     ctx.status = error.code || 500;
     ctx.body = error.toString();
   }
@@ -35,9 +34,10 @@ app.use(async (ctx, next) => {
 app.use(router.anonymous.routes());
 
 app.use(async (ctx, next) => {
-  if (ctx.isAuthenticated()) await next();
-  else {
-    ctx.session.redirect = ctx.request.url;
+  if (ctx.isAuthenticated()) {
+    await next();
+  } else {
+    ctx.session.redirect = ctx.url;
     ctx.redirect('/login');
   }
 });
@@ -46,6 +46,6 @@ app.use(router.authenticated.routes());
 
 app.use(serve('dist')).use(ctx => send(ctx, 'dist/index.html'));
 
-app.listen(3000);
+app.listen(config.get('port'));
 
 logger.info('Listening...');

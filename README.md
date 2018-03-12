@@ -1,5 +1,5 @@
 # Roomie
 
-*Google Calendar Meeting Rooms Dashboard*
+*Meeting Rooms Dashboard for Google Calendar*
 
-Built with [Vue.js](https://vuejs.org/), [Koa](http://koajs.com/), and [Passport](http://www.passportjs.org/). 
+Built with [Vue.js](https://vuejs.org/) and [Koa](http://koajs.com/). 

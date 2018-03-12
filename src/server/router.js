@@ -8,7 +8,6 @@ const authenticated = new Router();
 
 // region Anonymous Routes
 
-/** @see https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#define-a-liveness-http-request */
 anonymous.get('/healthz', (ctx) => { ctx.status = 200; });
 
 /** @see http://www.passportjs.org/docs/google/#routes */
