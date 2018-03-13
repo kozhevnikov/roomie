@@ -33,14 +33,16 @@ app.use(async (ctx, next) => {
 
 app.use(router.anonymous.routes());
 
-app.use(async (ctx, next) => {
-  if (ctx.isAuthenticated()) {
-    await next();
-  } else {
-    ctx.session.redirect = ctx.url;
-    ctx.redirect('/login');
-  }
-});
+if (config.get('authentication.enable')) {
+  app.use(async (ctx, next) => {
+    if (ctx.isAuthenticated()) {
+      await next();
+    } else {
+      ctx.session.redirect = ctx.url;
+      ctx.redirect('/login');
+    }
+  });
+}
 
 app.use(router.authenticated.routes());
 

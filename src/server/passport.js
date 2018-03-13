@@ -13,8 +13,9 @@ const options = {
 
 const strategy = new OAuth2Strategy(options, (accessToken, refreshToken, profile, done) => {
   const email = profile.emails.find(email => email.type === 'account').value;
-  logger.info('Login', email);
-  done(null, { email });
+  const test = config.get('authentication.email').test(email);
+  logger.log(test ? 'info' : 'error', 'Login %s', email);
+  done(null, test ? { email } : false);
 });
 
 passport.use(strategy);

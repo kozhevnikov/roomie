@@ -14,6 +14,15 @@ const config = convict({
   session: {
     key: { format: String, default: 'some secret hurr' },
     age: { format: Number, default: 7 * 24 * 60 * 60 * 1000 }
+  },
+
+  /**
+   * Google Sign-In
+   * @see https://developers.google.com/identity/
+   */
+  authentication: {
+    enable: { format: Boolean, default: false },
+    email: { format: RegExp, default: /@(example\.com|.*)$/ }
   }
 });
 
