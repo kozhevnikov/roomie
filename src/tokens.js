@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* eslint-disable no-console,import/no-extraneous-dependencies */
+/* eslint-disable no-console */
 const { OAuth2Client } = require('google-auth-library');
 const { readFileSync, writeFileSync } = require('fs');
 const { createInterface } = require('readline');
