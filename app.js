@@ -5,10 +5,15 @@ const session = require('koa-session');
 
 const { config, logger, router, passport } = require('./src/server');
 
-function log(ctx) {
-  const level = ctx.isAuthenticated() ? 'info' : 'debug';
-  const email = ctx.isAuthenticated() ? ctx.state.user.email : 'anonymous';
-  logger.log(level, `${ctx.method} ${ctx.url} ${email} ${ctx.ip} ${ctx.headers['user-agent']}`);
+function level(ctx) {
+  if ([
+    /^\/api\/room\//,
+    /^\/(bundle\.js|styles\.css|favicon\.ico)$/
+  ].some(url => url.test(ctx.url))) return 'silly';
+
+  if (!ctx.isAuthenticated()) return 'debug';
+
+  return 'info';
 }
 
 const app = new Koa();
@@ -22,7 +27,7 @@ app.use(passport.initialize()).use(passport.session());
 
 app.use(async (ctx, next) => {
   try {
-    log(ctx);
+    logger.log(level(ctx), `${ctx.method} ${ctx.url} ${ctx.state.user ? ctx.state.user.email : 'anonymous'} ${ctx.ip} ${ctx.headers['user-agent']}`);
     await next();
   } catch (error) {
     logger.error('%O', error);
