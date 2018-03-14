@@ -1,6 +1,8 @@
 <template>
-  <div>
-    <a :href="event.href" target="_blank">{{ start }} - {{ end }} {{ event.name }}</a>
+  <div class="nowrap">
+    <a :href="event.href" :title="event.name" target="_blank">
+      {{ start }} - {{ end }} {{ event.name }}
+    </a>
   </div>
 </template>
 
@@ -24,3 +26,11 @@ export default {
   }
 };
 </script>
+
+<style>
+  .nowrap {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+</style>
