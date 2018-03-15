@@ -7,3 +7,9 @@
     <router-view/>
   </div>
 </template>
+
+<style>
+  #app {
+    margin: 0.9em;
+  }
+</style>

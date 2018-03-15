@@ -26,8 +26,7 @@ export default {
   components: { Event },
 
   props: {
-    id: { type: String, required: true },
-    number: { type: Number, default: null }
+    id: { type: String, required: true }
   },
 
   data() {
@@ -67,7 +66,6 @@ export default {
 <style scoped>
   .md-card {
     cursor: default;
-    margin: 1em;
-    padding: 0.5em;
+    margin: 0.9em;
   }
 </style>

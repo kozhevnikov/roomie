@@ -4,7 +4,6 @@
       v-for="(room, index) in rooms"
       :id="room"
       :key="room + index"
-      :number="index + 1"
       @recalculate="recalculate"
     />
   </div>
@@ -45,9 +44,3 @@ export default {
   }
 };
 </script>
-
-<style>
-  #office {
-    margin: 1em;
-  }
-</style>
