@@ -1,19 +1,14 @@
 <template>
   <div>
-    <md-card md-with-hover>
-      <md-card-header>
-        <a :href="href" class="md-subheading" target="_blank">{{ name }}</a>
-      </md-card-header>
-
-      <md-card-content>
-        <div v-if="events">
-          <Event v-for="event in events" :key="event.id" :event="event"/>
-        </div>
-        <div v-else>
-          {{ message }}
-        </div>
-      </md-card-content>
-    </md-card>
+    <div class="card">
+      <a :href="href" target="_blank">{{ name }}</a>
+      <div v-if="events">
+        <Event v-for="event in events" :key="event.id" :event="event"/>
+      </div>
+      <div v-else>
+        {{ message }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -29,14 +24,12 @@ export default {
     id: { type: String, required: true }
   },
 
-  data() {
-    return {
-      name: 'Loading...',
-      message: 'Loading...',
-      href: null,
-      events: null
-    };
-  },
+  data: () => ({
+    name: 'Loading...',
+    message: 'Loading...',
+    href: null,
+    events: null
+  }),
 
   async created() {
     try {
@@ -63,9 +56,9 @@ export default {
 };
 </script>
 
-<style scoped>
-  .md-card {
-    cursor: default;
-    margin: 0.9em;
+<style>
+  .card {
+    border: 1px solid #ccc;
+    margin: 0.5em;
   }
 </style>

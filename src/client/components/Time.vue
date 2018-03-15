@@ -27,9 +27,3 @@ export default {
   }
 };
 </script>
-
-<style>
-  .time {
-    font: 0.9em Menlo, Monaco, Consolas, monospace;
-  }
-</style>
