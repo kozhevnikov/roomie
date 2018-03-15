@@ -44,3 +44,9 @@ export default {
   }
 };
 </script>
+
+<style>
+  #office {
+    margin: 10px;
+  }
+</style>
