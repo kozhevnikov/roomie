@@ -1,9 +1,8 @@
 <template>
-  <div class="room">
+  <div>
     <md-card md-with-hover>
-
       <md-card-header>
-        <a :href="href" target="_blank">{{ name }}</a>
+        <a :href="href" class="md-subheading" target="_blank">{{ name }}</a>
       </md-card-header>
 
       <md-card-content>
@@ -14,19 +13,21 @@
           {{ message }}
         </div>
       </md-card-content>
-
     </md-card>
   </div>
 </template>
 
 <script>
+import 'whatwg-fetch';
+
 import Event from './Event.vue';
 
 export default {
   components: { Event },
 
   props: {
-    id: { type: String, required: true }
+    id: { type: String, required: true },
+    number: { type: Number, default: null }
   },
 
   data() {
@@ -39,22 +40,26 @@ export default {
   },
 
   async created() {
-    const response = await fetch(`/api/room/${encodeURIComponent(this.id)}`, {
-      credentials: 'same-origin'
-    });
+    try {
+      const response = await fetch(`/api/room/${encodeURIComponent(this.id)}`, {
+        credentials: 'same-origin'
+      });
 
-    if (response.ok) {
-      const data = await response.json();
-      Object.assign(this, data);
-    } else {
-      this.name = response.statusText;
-      this.message = await response.text();
-      this.events = null;
+      if (response.ok) {
+        const data = await response.json();
+        Object.assign(this, data);
+      } else {
+        this.name = response.statusText;
+        this.message = await response.text();
+      }
+    } catch (error) {
+      this.name = error.message;
+      this.message = error.stack;
     }
   },
 
   updated() {
-    this.$emit('macy');
+    this.$emit('recalculate');
   }
 };
 </script>
@@ -62,6 +67,7 @@ export default {
 <style scoped>
   .md-card {
     cursor: default;
-    margin: 0.5em;
+    margin: 1em;
+    padding: 0.5em;
   }
 </style>

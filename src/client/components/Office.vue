@@ -28,10 +28,10 @@ export default {
       mobileFirst: true,
       columns: 1,
       breakAt: {
-        576: 2,
-        768: 3,
-        992: 4,
-        1200: 5
+        600: 2,
+        900: 3,
+        1200: 4,
+        1800: 5
       },
       margin: 0
     });
