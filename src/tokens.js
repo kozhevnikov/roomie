@@ -7,7 +7,7 @@ const opn = require('opn');
 
 const secret = JSON.parse(readFileSync('client_secret.json'));
 
-async function token() {
+async function tokens() {
   const client = new OAuth2Client(
     secret.installed.client_id,
     secret.installed.client_secret,
@@ -42,4 +42,4 @@ async function token() {
   console.log('Done');
 }
 
-token().catch(console.error);
+tokens().catch(console.error);

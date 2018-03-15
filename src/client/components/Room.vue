@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="card">
+    <div class="room">
       <a :href="href" target="_blank">{{ name }}</a>
       <div v-if="events">
         <Event v-for="event in events" :key="event.id" :event="event"/>
@@ -13,8 +13,6 @@
 </template>
 
 <script>
-import 'whatwg-fetch';
-
 import Event from './Event.vue';
 
 export default {
@@ -57,8 +55,9 @@ export default {
 </script>
 
 <style>
-  .card {
+  .room {
     border: 1px solid #ccc;
-    margin: 0.5em;
+    margin: 10px;
+    padding: 20px;
   }
 </style>

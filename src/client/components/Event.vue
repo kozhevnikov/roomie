@@ -1,6 +1,8 @@
 <template>
-  <div class="event">
-    <Time :start="event.start" :end="event.end"/>
+  <div class="nowrap">
+    <span :title="event.start">{{ start }}</span>
+    -
+    <span :title="event.end">{{ end }}</span>
     <a :href="event.href" :title="event.name" target="_blank">
       {{ event.name }}
     </a>
@@ -8,19 +10,26 @@
 </template>
 
 <script>
-import Time from './Time.vue';
+import moment from 'moment';
 
 export default {
-  components: { Time },
-
   props: {
     event: { type: Object, required: true }
+  },
+
+  computed: {
+    start() { return this.hhmm(this.event.start); },
+    end() { return this.hhmm(this.event.end); }
+  },
+
+  methods: {
+    hhmm: time => moment(time).format('HH:mm')
   }
 };
 </script>
 
 <style>
-  .event {
+  .nowrap {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

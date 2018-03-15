@@ -9,7 +9,7 @@
 </template>
 
 <style>
-  #app {
-    margin: 0.5em;
+  body {
+    margin: 10px;
   }
 </style>
