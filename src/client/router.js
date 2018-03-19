@@ -12,6 +12,6 @@ export default new VueRouter({
     { path: '/', redirect: '/london' },
     { name: 'London', path: '/london', component: London },
     { name: 'Paris', path: '/paris', component: Paris },
-    { path: '*', redirect: '/' },
+    { path: '*', redirect: '/' }
   ]
 });

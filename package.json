@@ -75,6 +75,7 @@
       "max-len": "off",
       "no-shadow": "off",
       "object-curly-newline": "off",
+      "vue/attributes-order": "off",
       "vue/max-attributes-per-line": "off"
     }
   },
