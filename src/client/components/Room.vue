@@ -1,14 +1,18 @@
 <template>
   <div>
-    <div class="room">
-      <a :href="href" target="_blank">{{ name }}</a>
-      <div v-if="events">
-        <Event v-for="event in events" :key="event.id" :event="event"/>
-      </div>
-      <div v-else>
-        {{ message }}
-      </div>
-    </div>
+    <v-card>
+      <v-card-title>
+        <h3><a :href="href" target="_blank">{{ name }}</a></h3>
+      </v-card-title>
+      <v-card-text>
+        <div v-if="events">
+          <Event v-for="event in events" :key="event.id" :event="event"/>
+        </div>
+        <div v-else>
+          {{ message }}
+        </div>
+      </v-card-text>
+    </v-card>
   </div>
 </template>
 
@@ -55,9 +59,11 @@ export default {
 </script>
 
 <style>
-  .room {
-    border: 1px solid #ccc;
-    margin: 10px;
-    padding: 20px;
+  .card {
+    margin: 8px;
+  }
+
+  .card__text {
+    padding-top: 0;
   }
 </style>

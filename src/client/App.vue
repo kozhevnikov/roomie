@@ -37,3 +37,9 @@ export default {
   }
 };
 </script>
+
+<style>
+  .container {
+    padding: 8px;
+  }
+</style>
