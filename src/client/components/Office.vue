@@ -34,7 +34,12 @@ export default {
       },
       margin: 0
     });
+
     this.recalculate();
+
+    window.addEventListener('resize', () => {
+      setTimeout(this.recalculate, 500);
+    });
   },
 
   methods: {
@@ -44,9 +49,3 @@ export default {
   }
 };
 </script>
-
-<style>
-  #office {
-    margin: 10px;
-  }
-</style>

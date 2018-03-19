@@ -1,17 +1,17 @@
 import Vue from 'vue';
-import Router from 'vue-router';
+import VueRouter from 'vue-router';
 
 import London from './views/London.vue';
 import Paris from './views/Paris.vue';
 
-Vue.use(Router);
+Vue.use(VueRouter);
 
-export default new Router({
+export default new VueRouter({
   mode: 'history',
   routes: [
     { path: '/', redirect: '/london' },
-    { path: '/london', component: London },
-    { path: '/paris', component: Paris },
-    { path: '*', redirect: '/' }
+    { name: 'London', path: '/london', component: London },
+    { name: 'Paris', path: '/paris', component: Paris },
+    { path: '*', redirect: '/' },
   ]
 });

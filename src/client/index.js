@@ -9,7 +9,7 @@ Vue.config.productionTip = false;
 
 Vue.use(Vuetify);
 
-new Vue({ // eslint-disable-line no-new
+window.roomie = new Vue({
   el: '#app',
   render: h => h(App),
   router

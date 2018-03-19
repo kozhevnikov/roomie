@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Paris</h1>
     <Office :rooms="rooms"/>
   </div>
 </template>
