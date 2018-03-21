@@ -9,7 +9,10 @@ module.exports = {
     'whatwg-fetch',
     './src/client'
   ],
-  output: { filename: 'bundle.js' },
+  output: {
+    filename: 'bundle.js',
+    publicPath: '/'
+  },
   module: {
     rules: [
       {

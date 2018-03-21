@@ -6,10 +6,12 @@ const session = require('koa-session');
 const { config, logger, router, passport } = require('./src/server');
 
 function level(ctx) {
-  if ([
+  const urls = [
     /^\/api\/room\//,
     /^\/(bundle\.js|styles\.css|favicon\.ico)$/
-  ].some(url => url.test(ctx.url))) return 'silly';
+  ];
+
+  if (urls.some(url => url.test(ctx.url))) return 'silly';
 
   if (!ctx.isAuthenticated()) return 'debug';
 

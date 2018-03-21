@@ -5,9 +5,9 @@ const { readFileSync, writeFileSync } = require('fs');
 const { createInterface } = require('readline');
 const opn = require('opn');
 
-const secret = JSON.parse(readFileSync('client_secret.json'));
-
 async function tokens() {
+  const secret = JSON.parse(readFileSync('client_secret.json'));
+
   const client = new OAuth2Client(
     secret.installed.client_id,
     secret.installed.client_secret,
