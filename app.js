@@ -32,7 +32,7 @@ app.use(async (ctx, next) => {
     logger.log(level(ctx), `${ctx.method} ${ctx.url} ${ctx.state.user ? ctx.state.user.email : 'anonymous'} ${ctx.ip} ${ctx.headers['user-agent']}`);
     await next();
   } catch (error) {
-    logger.error('%O', error);
+    logger.error(error.stack);
     ctx.status = error.code || 500;
     ctx.body = error.toString();
   }

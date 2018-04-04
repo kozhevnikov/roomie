@@ -17,7 +17,6 @@ module.exports = {
   module: {
     rules: [
       { test: /\.vue$/, loader: 'vue-loader' },
-      { test: /\.html$/, loader: 'html-loader' },
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
       { test: /\.css$/, use: ExtractTextPlugin.extract({ use: 'css-loader' }) }
     ]

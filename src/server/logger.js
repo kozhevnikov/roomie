@@ -10,9 +10,11 @@ const logger = winston.createLogger({
         winston.format.splat(),
         winston.format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`)
       ),
-      stderrLevels: []
+      stderrLevels: [],
+      handleExceptions: true
     })
-  ]
+  ],
+  exitOnError: false
 });
 
 module.exports = logger;

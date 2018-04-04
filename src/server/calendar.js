@@ -23,7 +23,7 @@ exports.events = async (id, date = Date.now()) => {
 
   const options = {
     auth: client,
-    calendarId: encodeURIComponent(id),
+    calendarId: id,
     singleEvents: true,
     timeMin: timeMin.toISOString(),
     timeMax: timeMax.toISOString(),
