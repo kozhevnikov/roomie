@@ -1,14 +1,14 @@
 <template>
-  <tr>
+  <tr :class="{ past, current }">
     <td class="time">
       <span :title="event.start">
-        {{ start }}
+        {{ startTime }}
       </span>
     </td>
     <td>&ndash;</td>
     <td class="time">
       <span :title="event.end">
-        {{ end }}
+        {{ endTime }}
       </span>
     </td>
     <td class="name">
@@ -30,12 +30,14 @@ export default {
   },
 
   computed: {
-    start() { return this.time(this.event.start); },
-    end() { return this.time(this.event.end); }
-  },
+    start() { return DateTime.fromISO(this.event.start); },
+    end() { return DateTime.fromISO(this.event.end); },
 
-  methods: {
-    time: date => DateTime.fromISO(date).toLocaleString(DateTime.TIME_SIMPLE)
+    startTime() { return this.start.toLocaleString(DateTime.TIME_SIMPLE); },
+    endTime() { return this.end.toLocaleString(DateTime.TIME_SIMPLE); },
+
+    past() { return this.end < DateTime.local(); },
+    current() { return this.start < DateTime.local() && this.end > DateTime.local(); }
   }
 };
 </script>
@@ -60,5 +62,13 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .past {
+    opacity: 0.5;
+  }
+
+  .current {
+    font-weight: bold;
   }
 </style>
