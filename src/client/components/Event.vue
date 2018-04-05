@@ -1,16 +1,28 @@
 <template>
-  <div class="nowrap">
-    <span :title="event.start">{{ start }}</span>
-    -
-    <span :title="event.end">{{ end }}</span>
-    <a :href="event.href" :title="event.name" target="_blank">
-      {{ event.name }}
-    </a>
-  </div>
+  <tr>
+    <td class="time">
+      <span :title="event.start">
+        {{ start }}
+      </span>
+    </td>
+    <td>&ndash;</td>
+    <td class="time">
+      <span :title="event.end">
+        {{ end }}
+      </span>
+    </td>
+    <td class="name">
+      <span class="nowrap">
+        <a :href="event.href" :title="event.name" target="_blank">
+          {{ event.name }}
+        </a>
+      </span>
+    </td>
+  </tr>
 </template>
 
 <script>
-import moment from 'moment';
+import { DateTime } from 'luxon';
 
 export default {
   props: {
@@ -18,18 +30,33 @@ export default {
   },
 
   computed: {
-    start() { return this.hhmm(this.event.start); },
-    end() { return this.hhmm(this.event.end); }
+    start() { return this.time(this.event.start); },
+    end() { return this.time(this.event.end); }
   },
 
   methods: {
-    hhmm: time => moment(time).format('HH:mm')
+    time: date => DateTime.fromISO(date).toLocaleString(DateTime.TIME_SIMPLE)
   }
 };
 </script>
 
-<style>
+<style scoped>
+  .time {
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .name {
+    position: relative;
+    width: 100%;
+  }
+
   .nowrap {
+    padding-left: 8px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

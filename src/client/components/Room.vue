@@ -2,15 +2,15 @@
   <div>
     <v-card>
       <v-card-title>
-        <h3><a :href="href" target="_blank">{{ name }}</a></h3>
+        <h3><a :href="room.href" target="_blank">{{ room.name }}</a></h3>
       </v-card-title>
       <v-card-text>
-        <div v-if="events">
-          <Event v-for="event in events" :key="event.id" :event="event"/>
-        </div>
-        <div v-else>
+        <div v-if="message">
           {{ message }}
         </div>
+        <table v-if="room.events" class="events">
+          <Event v-for="event in room.events" :key="event.id" :event="event"/>
+        </table>
       </v-card-text>
     </v-card>
   </div>
@@ -26,29 +26,20 @@ export default {
     id: { type: String, required: true }
   },
 
-  data: () => ({
-    name: 'Loading...',
-    message: 'Loading...',
-    href: null,
-    events: null
-  }),
+  data() {
+    return {
+      room: { name: this.id },
+      message: null
+    };
+  },
 
   async created() {
+    this.message = 'Loading...';
     try {
-      const response = await fetch(`/api/room/${encodeURIComponent(this.id)}`, {
-        credentials: 'same-origin'
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        Object.assign(this, data);
-      } else {
-        this.name = response.statusText;
-        this.message = await response.text();
-      }
+      this.room = await this.$store.dispatch('getRoom', this.id);
+      this.message = null;
     } catch (error) {
-      this.name = error.message;
-      this.message = error.stack;
+      this.message = error.message;
     }
   },
 
@@ -58,9 +49,17 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+  .events {
+    border-collapse: collapse;
+  }
+
   .card {
     margin: 8px;
+  }
+
+  .card__title {
+    word-break: break-all;
   }
 
   .card__text {

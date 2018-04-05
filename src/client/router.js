@@ -10,8 +10,8 @@ export default new VueRouter({
   mode: 'history',
   routes: [
     { path: '/', redirect: '/london' },
-    { name: 'London', path: '/london', component: London },
-    { name: 'Paris', path: '/paris', component: Paris },
+    { path: '/london', name: 'London', component: London },
+    { path: '/paris', name: 'Paris', component: Paris },
     { path: '*', redirect: '/' }
   ]
 });

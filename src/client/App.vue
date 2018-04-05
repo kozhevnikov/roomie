@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-model="drawer" app fixed :clipped="$vuetify.breakpoint.lgAndUp">
+    <v-navigation-drawer v-model="drawer" app fixed>
       <v-list>
-        <v-list-tile v-for="route in routes" :key="route.name" :to="route.path">
+        <v-list-tile v-for="route in routes" :key="route.name" :to="route">
           <v-list-tile-action>
             <v-icon>location_city</v-icon>
           </v-list-tile-action>
@@ -13,7 +13,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-toolbar app fixed scroll-off-screen :clipped-left="$vuetify.breakpoint.lgAndUp">
+    <v-toolbar app fixed scroll-off-screen>
       <v-toolbar-side-icon @click="drawer = !drawer"/>
       <v-toolbar-title>{{ $route.name }}</v-toolbar-title>
     </v-toolbar>

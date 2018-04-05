@@ -37,14 +37,12 @@ export default {
 
     this.recalculate();
 
-    window.addEventListener('resize', () => {
-      setTimeout(this.recalculate, 500);
-    });
+    window.addEventListener('resize', () => setTimeout(this.recalculate, 500));
   },
 
   methods: {
     recalculate() {
-      this.macy.recalculate(true, false);
+      this.macy.recalculate(true);
     }
   }
 };

@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <Office :rooms="rooms"/>
-  </div>
+  <Office :rooms="rooms"/>
 </template>
 
 <script>
