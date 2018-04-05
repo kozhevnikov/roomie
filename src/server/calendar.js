@@ -50,7 +50,6 @@ exports.events = async (id, date = Date.now()) => {
 
   return {
     name: data.summary,
-    href: `https://calendar.google.com/calendar/embed?src=${id}&mode=AGENDA`,
     events: items.map(item => ({
       id: item.id,
       name: item.summary || (item.visibility === 'private' ? 'busy' : '(No title)'),

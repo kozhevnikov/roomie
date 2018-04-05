@@ -1,27 +1,39 @@
+/* eslint-disable no-param-reassign */
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { DateTime } from 'luxon';
 import 'whatwg-fetch';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    date: DateTime.local().toISODate(),
     rooms: new Map()
   },
 
   mutations: {
-    setRoom(state, { id, room }) {
-      state.rooms.set(id, room);
+    setDate(state, value) {
+      state.date = value;
+    },
+    setRoom(state, { key, room }) {
+      state.rooms.set(key, room);
     }
   },
 
   actions: {
-    async getRoom({ state, commit }, id) {
-      if (state.rooms.has(id)) {
-        return state.rooms.get(id);
+    setDate({ commit }, value) {
+      const date = DateTime.fromISO(value);
+      if (date.isValid) commit('setDate', date.toISODate());
+    },
+
+    async getRoom({ state, commit }, { id, date }) {
+      const key = `${id} ${date}`;
+      if (state.rooms.has(key)) {
+        return state.rooms.get(key);
       }
 
-      const response = await fetch(`/api/room/${encodeURIComponent(id)}`, { credentials: 'same-origin' });
+      const response = await fetch(`/api/room/${encodeURIComponent(id)}/${date}`, { credentials: 'same-origin' });
 
       if (!response.ok) {
         const message = await response.text() || response.statusText;
@@ -30,8 +42,8 @@ export default new Vuex.Store({
         throw error;
       }
 
-      const room = await response.json();
-      commit('setRoom', { id, room });
+      const room = Object.freeze(await response.json());
+      commit('setRoom', { key, room });
 
       return room;
     }

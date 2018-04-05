@@ -6,12 +6,18 @@ import Paris from './views/Paris.vue';
 
 Vue.use(VueRouter);
 
-export default new VueRouter({
+const router = new VueRouter({
   mode: 'history',
   routes: [
     { path: '/', redirect: '/london' },
-    { path: '/london', name: 'London', component: London },
-    { path: '/paris', name: 'Paris', component: Paris },
+    { path: '/london/:date?', name: 'London', component: London },
+    { path: '/paris/:date?', name: 'Paris', component: Paris },
     { path: '*', redirect: '/' }
   ]
 });
+
+router.afterEach((to) => {
+  document.title = to.name;
+});
+
+export default router;

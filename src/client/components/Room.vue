@@ -2,13 +2,16 @@
   <div>
     <v-card>
       <v-card-title>
-        <h3><a :href="room.href" target="_blank">{{ room.name }}</a></h3>
+        <h3><a :href="href" target="_blank">{{ name }}</a></h3>
       </v-card-title>
       <v-card-text>
         <div v-if="message">
           {{ message }}
         </div>
-        <table v-if="room.events" class="events">
+        <table v-if="room" class="events">
+          <tr v-if="!room.events.length">
+            <td>Free</td>
+          </tr>
           <Event v-for="event in room.events" :key="event.id" :event="event"/>
         </table>
       </v-card-text>
@@ -28,23 +31,44 @@ export default {
 
   data() {
     return {
-      room: { name: this.id },
+      room: null,
+      name: this.id,
+      href: `https://calendar.google.com/calendar/embed?src=${this.id}&mode=AGENDA`,
       message: null
     };
   },
 
-  async created() {
-    this.message = 'Loading...';
-    try {
-      this.room = await this.$store.dispatch('getRoom', this.id);
-      this.message = null;
-    } catch (error) {
-      this.message = error.message;
+  computed: {
+    date() { return this.$store.state.date; }
+  },
+
+  watch: {
+    date() {
+      this.getRoom();
     }
+  },
+
+  created() {
+    this.getRoom();
   },
 
   updated() {
     this.$emit('recalculate');
+  },
+
+  methods: {
+    async getRoom() {
+      this.room = null;
+      this.message = 'Loading...';
+
+      try {
+        this.room = await this.$store.dispatch('getRoom', { id: this.id, date: this.date });
+        this.name = this.room.name;
+        this.message = null;
+      } catch (error) {
+        this.message = error.message;
+      }
+    }
   }
 };
 </script>
