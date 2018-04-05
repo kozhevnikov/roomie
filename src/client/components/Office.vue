@@ -4,7 +4,6 @@
       v-for="(room, index) in rooms"
       :id="room"
       :key="room + index"
-      @recalculate="recalculate"
     />
   </div>
 </template>
@@ -35,15 +34,8 @@ export default {
       margin: 0
     });
 
-    this.recalculate();
-
-    window.addEventListener('resize', () => setTimeout(this.recalculate, 500));
-  },
-
-  methods: {
-    recalculate() {
-      this.macy.recalculate(true);
-    }
+    this.$root.$on('macy', () => this.macy.recalculate(true));
+    this.$root.$emit('macy');
   }
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-model="drawer" app fixed>
+    <v-navigation-drawer v-model="drawer" @input="macy" app fixed>
       <v-date-picker v-model="date" first-day-of-week="1" no-title full-width/>
 
       <v-list>
@@ -64,6 +64,10 @@ export default {
       const route = { name };
       if (this.date !== this.today) route.params = { date: this.date };
       return route;
+    },
+
+    macy() {
+      setTimeout(() => this.$root.$emit('macy'), 100);
     }
   }
 };

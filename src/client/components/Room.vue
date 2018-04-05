@@ -53,7 +53,7 @@ export default {
   },
 
   updated() {
-    this.$emit('recalculate');
+    this.$root.$emit('macy');
   },
 
   methods: {
