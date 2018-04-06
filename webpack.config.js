@@ -24,7 +24,10 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin('dist'),
     new VueLoaderPlugin(),
-    new HtmlWebpackPlugin({ template: 'src/client/index.html' }),
-    new ExtractTextPlugin('styles.css')
+    new ExtractTextPlugin('styles.css'),
+    new HtmlWebpackPlugin({
+      template: 'src/client/index.html',
+      favicon: 'src/client/favicon.ico'
+    })
   ]
 };

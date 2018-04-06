@@ -108,6 +108,7 @@ export default {
 
   .card__title {
     word-break: break-all;
+    word-break: break-word;
   }
 
   .card__text {
