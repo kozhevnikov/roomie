@@ -9,10 +9,24 @@
           {{ message }}
         </div>
         <table v-if="room" class="events">
-          <tr v-if="!room.events.length">
-            <td>Free</td>
-          </tr>
-          <Event v-for="event in room.events" :key="event.id" :event="event"/>
+          <template v-if="room.events.length">
+            <template v-for="(event, index) in room.events">
+              <Free
+                :key="`free-${index}`"
+                :start="index ? room.events[index - 1].end : openTime"
+                :end="event.start"
+              />
+              <Busy
+                :key="`busy-${index}`"
+                :event="event"
+              />
+            </template>
+            <Free
+              :start="room.events[room.events.length - 1].end"
+              :end="closeTime"
+            />
+          </template>
+          <Free v-else :start="openTime" :end="closeTime" all-day/>
         </table>
       </v-card-text>
     </v-card>
@@ -20,10 +34,13 @@
 </template>
 
 <script>
-import Event from './Event.vue';
+import { DateTime } from 'luxon';
+
+import Free from './Free.vue';
+import Busy from './Busy.vue';
 
 export default {
-  components: { Event },
+  components: { Free, Busy },
 
   props: {
     id: { type: String, required: true }
@@ -39,7 +56,9 @@ export default {
   },
 
   computed: {
-    date() { return this.$store.state.date; }
+    date() { return this.$store.state.date; },
+    openTime() { return this.getTime(9); },
+    closeTime() { return this.getTime(17); }
   },
 
   watch: {
@@ -68,6 +87,10 @@ export default {
       } catch (error) {
         this.message = error.message;
       }
+    },
+
+    getTime(hour, minute = 0) {
+      return DateTime.fromISO(this.date).set({ hour, minute }).toISO();
     }
   }
 };
@@ -76,6 +99,7 @@ export default {
 <style scoped>
   .events {
     border-collapse: collapse;
+    width: 100%;
   }
 
   .card {

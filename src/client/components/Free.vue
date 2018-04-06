@@ -1,0 +1,91 @@
+<template>
+  <tr :class="now ? 'free-now' : 'free'">
+    <td v-if="allDay" class="all-day">Free all day</td>
+    <template v-else-if="show">
+      <td class="time">{{ startTime }}</td>
+      <td>&ndash;</td>
+      <td class="time">{{ endTime }}</td>
+      <td class="name">
+        <span class="nowrap" :title="duration">
+          Free {{ now ? 'now' : '' }} for {{ duration }}
+        </span>
+      </td>
+    </template>
+  </tr>
+</template>
+
+<script>
+import { DateTime, Interval } from 'luxon';
+
+export default {
+  props: {
+    start: { type: String, required: true },
+    end: { type: String, required: true },
+    allDay: { type: Boolean, default: false }
+  },
+
+  computed: {
+    startDate() { return DateTime.fromISO(this.start); },
+    endDate() { return DateTime.fromISO(this.end); },
+    startTime() { return this.startDate.toLocaleString(DateTime.TIME_SIMPLE); },
+    endTime() { return this.endDate.toLocaleString(DateTime.TIME_SIMPLE); },
+
+    interval() {
+      return Interval.fromDateTimes(this.startDate < DateTime.local() ? DateTime.local() : this.startDate, this.endDate);
+    },
+
+    duration() {
+      const duration = this.interval.toDuration(['hours', 'minutes']);
+      const { hours: h, minutes: m } = duration;
+      const hs = h >= 2 ? 's' : '';
+      const ms = m >= 2 ? 's' : '';
+      if (h > 0 && m > 0) return duration.toFormat(`h 'hr${hs}' m 'min${ms}'`);
+      if (h > 0) return duration.toFormat(`h 'hour${hs}'`);
+      return duration.toFormat(`m 'minute${ms}'`);
+    },
+
+    show() {
+      return this.endDate > DateTime.local() && this.interval.length('minutes') > 10;
+    },
+
+    now() {
+      return this.startDate < DateTime.local() && DateTime.local() < this.endDate;
+    }
+  }
+};
+</script>
+
+<style scoped>
+  .time {
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .name {
+    position: relative;
+    width: 100%;
+  }
+
+  .nowrap {
+    padding-left: 8px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .free {
+    background-color: #80D8FF;
+  }
+
+  .free-now {
+    background-color: #CCFF90;
+  }
+
+  .all-day {
+    text-align: center;
+  }
+</style>
