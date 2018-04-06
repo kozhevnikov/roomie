@@ -35,13 +35,12 @@ export default {
     },
 
     duration() {
-      const duration = this.interval.toDuration(['hours', 'minutes']);
-      const { hours: h, minutes: m } = duration;
-      const hs = h >= 2 ? 's' : '';
-      const ms = m >= 2 ? 's' : '';
-      if (h > 0 && m > 0) return duration.toFormat(`h 'hr${hs}' m 'min${ms}'`);
-      if (h > 0) return duration.toFormat(`h 'hour${hs}'`);
-      return duration.toFormat(`m 'minute${ms}'`);
+      const { hours: h, minutes: m } = this.interval.toDuration(['hours', 'minutes', 'seconds']).toObject();
+      const hs = h > 1 ? 's' : '';
+      const ms = m > 1 ? 's' : '';
+      if (h > 0 && m > 0) return `${h} hr${hs} ${m} min${ms}`;
+      if (h > 0) return `${h} hour${hs}`;
+      return `${m} minute${ms}`;
     },
 
     show() {
