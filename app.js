@@ -7,6 +7,9 @@ const { config, logger, router, passport } = require('./src/server');
 
 function level(ctx) {
   const urls = [
+    /^\/healthz$/,
+    /^\/login$/,
+    /^\/login\/callback\?/,
     /^\/api\/room\//,
     /^\/(bundle\.js|styles\.css|favicon\.ico)$/
   ];
