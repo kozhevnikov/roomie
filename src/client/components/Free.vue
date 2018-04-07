@@ -1,6 +1,6 @@
 <template>
-  <tr :class="now ? 'free-now' : 'free'">
-    <td v-if="allDay" class="all-day">Free all day</td>
+  <tr :class="now ? 'green' : 'blue'" class="lighten-4">
+    <td v-if="allDay" class="text-xs-center">Free all day</td>
     <template v-else-if="show">
       <td class="time">{{ startTime }}</td>
       <td>&ndash;</td>
@@ -74,17 +74,5 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-  }
-
-  .free {
-    background-color: #80D8FF;
-  }
-
-  .free-now {
-    background-color: #CCFF90;
-  }
-
-  .all-day {
-    text-align: center;
   }
 </style>

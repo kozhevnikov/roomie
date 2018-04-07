@@ -17,17 +17,17 @@ anonymous.get('/login', passport.authenticate('google', {
 
 anonymous.get('/login/callback', ctx => passport.authenticate('google', {
   successRedirect: ctx.session.redirect || '/',
-  failureRedirect: '/login'
+  failureRedirect: '/logout'
 })(ctx));
+
+anonymous.get('/logout', (ctx) => {
+  ctx.logout();
+  ctx.redirect('/');
+});
 
 // endregion
 
 // region Authenticated Routes
-
-authenticated.get('/logout', (ctx) => {
-  ctx.logout();
-  ctx.redirect('/');
-});
 
 authenticated.get('/api/room/:id/:date?', async (ctx) => {
   const { id, date } = ctx.params;
