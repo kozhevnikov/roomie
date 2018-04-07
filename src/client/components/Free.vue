@@ -1,5 +1,5 @@
 <template>
-  <tr :class="now ? 'green' : 'blue'" class="lighten-4">
+  <tr v-if="free" :class="now ? 'green' : 'blue'" class="lighten-4">
     <td v-if="allDay" class="text-xs-center">Free all day</td>
     <template v-else-if="show">
       <td class="time">{{ startTime }}</td>
@@ -25,6 +25,8 @@ export default {
   },
 
   computed: {
+    free() { return this.$store.state.free; },
+
     startDate() { return DateTime.fromISO(this.start); },
     endDate() { return DateTime.fromISO(this.end); },
     startTime() { return this.startDate.toLocaleString(DateTime.TIME_SIMPLE); },

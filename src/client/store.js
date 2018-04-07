@@ -8,17 +8,21 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    free: true,
+    busy: true,
     date: DateTime.local().toISODate(),
-    events: true,
     rooms: new Map()
   },
 
   mutations: {
+    setFree(state, value) {
+      state.free = value;
+    },
+    setBusy(state, value) {
+      state.busy = value;
+    },
     setDate(state, value) {
       state.date = value;
-    },
-    setEvents(state, value) {
-      state.events = value;
     },
     setRoom(state, { key, room }) {
       state.rooms.set(key, room);
