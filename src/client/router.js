@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
+import store from './store';
 import London from './views/London.vue';
 import Paris from './views/Paris.vue';
 
@@ -16,8 +17,10 @@ const router = new VueRouter({
   ]
 });
 
-router.afterEach((to) => {
+router.beforeEach((to, from, next) => {
+  store.dispatch('setDate', to.params.date);
   document.title = to.name;
+  next();
 });
 
 export default router;

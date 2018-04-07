@@ -23,7 +23,7 @@ export default new Vuex.Store({
 
   actions: {
     setDate({ commit }, value) {
-      const date = DateTime.fromISO(value);
+      const date = value ? DateTime.fromISO(value) : DateTime.local();
       if (date.isValid) commit('setDate', date.toISODate());
     },
 
