@@ -1,5 +1,5 @@
 <template>
-  <tr :class="{ past, current }">
+  <tr v-if="events" :class="{ past, current }">
     <td class="time">
       <span :title="event.start">
         {{ startTime }}
@@ -30,6 +30,8 @@ export default {
   },
 
   computed: {
+    events() { return this.$store.state.events; },
+
     start() { return DateTime.fromISO(this.event.start); },
     end() { return DateTime.fromISO(this.event.end); },
 

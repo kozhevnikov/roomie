@@ -4,6 +4,17 @@
       <v-date-picker v-model="date" first-day-of-week="1" no-title full-width/>
 
       <v-list>
+        <v-list-tile>
+          <v-list-tile-action>
+            <v-switch v-model="events"/>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Events</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+
+      <v-list>
         <v-list-tile v-for="route in routes" :key="route.name" :to="to(route.name)">
           <v-list-tile-action>
             <v-icon>location_city</v-icon>
@@ -42,11 +53,18 @@ export default {
       get() { return this.$store.state.date; },
       set(value) { this.$store.dispatch('setDate', value); }
     },
+    events: {
+      get() { return this.$store.state.events; },
+      set(value) { this.$store.commit('setEvents', value); }
+    },
     title() { return `${this.$route.name} ${DateTime.fromISO(this.date).toLocaleString(DateTime.DATE_SHORT)}`; },
     routes() { return this.$router.options.routes.filter(route => route.name); }
   },
 
   watch: {
+    events() {
+      this.macy();
+    },
     date(value) {
       this.$router.push({
         params: { date: value !== this.today ? value : null }

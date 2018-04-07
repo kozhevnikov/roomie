@@ -9,12 +9,16 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     date: DateTime.local().toISODate(),
+    events: true,
     rooms: new Map()
   },
 
   mutations: {
     setDate(state, value) {
       state.date = value;
+    },
+    setEvents(state, value) {
+      state.events = value;
     },
     setRoom(state, { key, room }) {
       state.rooms.set(key, room);
