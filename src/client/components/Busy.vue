@@ -13,9 +13,22 @@
     </td>
     <td class="name">
       <span class="nowrap">
-        <a :href="event.href" :title="event.name" target="_blank">
-          {{ event.name }}
-        </a>
+        <v-tooltip bottom>
+          <a :href="event.href" slot="activator" target="_blank">
+            {{ event.name }}
+          </a>
+          <h2>{{ event.name }}</h2>
+          <div>Created: {{ locale(event.created) }}</div>
+          <div v-if="event.creator">Creator: {{ event.creator }}</div>
+          <div v-if="event.organizer && event.organizer !== event.creator">Organizer: {{ event.organizer }}</div>
+          <div v-if="event.conference">Conference: {{ event.conference }}</div>
+          <div v-if="event.attendees">
+            Attendees: {{ event.attendees.length }}
+            <ul v-if="event.attendees.length < 10" class="attendees">
+              <li v-for="attendee in event.attendees" :key="attendee">{{ attendee }}</li>
+            </ul>
+          </div>
+        </v-tooltip>
       </span>
     </td>
   </tr>
@@ -40,6 +53,12 @@ export default {
 
     past() { return this.end < DateTime.local(); },
     current() { return this.start < DateTime.local() && this.end > DateTime.local(); }
+  },
+
+  methods: {
+    locale(date) {
+      return DateTime.fromISO(date).toLocaleString(DateTime.DATETIME_SHORT);
+    }
   }
 };
 </script>
@@ -72,5 +91,9 @@ export default {
 
   .current {
     font-weight: bold;
+  }
+
+  .attendees {
+    padding-left: 20px;
   }
 </style>
