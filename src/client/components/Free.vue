@@ -1,5 +1,5 @@
 <template>
-  <tr v-if="free" :class="now ? 'green' : 'blue'" class="lighten-4">
+  <tr v-if="free" :class="bgcolor">
     <td v-if="allDay" class="text-xs-center">Free all day</td>
     <template v-else-if="show">
       <td class="time">{{ startTime }}</td>
@@ -51,6 +51,12 @@ export default {
 
     now() {
       return this.startDate < DateTime.local() && DateTime.local() < this.endDate;
+    },
+
+    bgcolor() {
+      const color = this.now ? 'green' : 'blue';
+      const length = this.interval.length('minutes');
+      return `${color} lighten-${length < 30 ? 5 : length < 60 ? 4 : 3}`; // eslint-disable-line no-nested-ternary
     }
   }
 };
