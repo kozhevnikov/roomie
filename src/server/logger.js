@@ -17,4 +17,18 @@ const logger = winston.createLogger({
   exitOnError: false
 });
 
+const urls = [
+  /^\/healthz$/,
+  /^\/login$/,
+  /^\/login\/callback\?/,
+  /^\/api\/room\//,
+  /^\/(bundle\.js|styles\.css|favicon\.ico)$/
+];
+
+logger.getLevel = (context) => {
+  if (urls.some(url => url.test(context.url))) return 'silly';
+  if (!context.isAuthenticated()) return 'debug';
+  return 'info';
+};
+
 module.exports = logger;

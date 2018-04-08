@@ -5,22 +5,6 @@ const session = require('koa-session');
 
 const { config, logger, router, passport } = require('./src/server');
 
-function level(ctx) {
-  const urls = [
-    /^\/healthz$/,
-    /^\/login$/,
-    /^\/login\/callback\?/,
-    /^\/api\/room\//,
-    /^\/(bundle\.js|styles\.css|favicon\.ico)$/
-  ];
-
-  if (urls.some(url => url.test(ctx.url))) return 'silly';
-
-  if (!ctx.isAuthenticated()) return 'debug';
-
-  return 'info';
-}
-
 const app = new Koa();
 
 app.keys = [config.get('session.key')];
@@ -32,7 +16,7 @@ app.use(passport.initialize()).use(passport.session());
 
 app.use(async (ctx, next) => {
   try {
-    logger.log(level(ctx), `${ctx.method} ${ctx.url} ${ctx.state.user ? ctx.state.user.email : 'anonymous'} ${ctx.ip} ${ctx.headers['user-agent']}`);
+    logger.log(logger.getLevel(ctx), `${ctx.method} ${ctx.url} ${ctx.state.user ? ctx.state.user.email : 'anonymous'} ${ctx.ip} ${ctx.headers['user-agent']}`);
     await next();
   } catch (error) {
     logger.error(error.stack);
