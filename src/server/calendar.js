@@ -62,7 +62,8 @@ exports.events = async (id, date = Date.now()) => {
       conference: item.conferenceData ? item.conferenceData.conferenceId : null,
       attendees: item.attendees ? item.attendees
         .filter(attendee => !attendee.resource)
-        .map(attendee => attendee.displayName || attendee.email) : null
+        .map(attendee => attendee.displayName || attendee.email) : null,
+      recurring: item.recurringEventId
     }))
   };
 };

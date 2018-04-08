@@ -10,23 +10,17 @@ export default new Vuex.Store({
   state: {
     free: true,
     busy: true,
+    recurring: false,
     date: DateTime.local().toISODate(),
     rooms: new Map()
   },
 
   mutations: {
-    setFree(state, value) {
-      state.free = value;
-    },
-    setBusy(state, value) {
-      state.busy = value;
-    },
-    setDate(state, value) {
-      state.date = value;
-    },
-    setRoom(state, { key, room }) {
-      state.rooms.set(key, room);
-    }
+    setFree(state, value) { state.free = value; },
+    setBusy(state, value) { state.busy = value; },
+    setRecurring(state, value) { state.recurring = value; },
+    setDate(state, value) { state.date = value; },
+    setRoom(state, { key, room }) { state.rooms.set(key, room); }
   },
 
   actions: {

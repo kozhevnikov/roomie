@@ -14,9 +14,13 @@
     <td class="name">
       <span class="nowrap">
         <v-tooltip bottom>
-          <a :href="event.href" slot="activator" target="_blank">
-            {{ event.name }}
-          </a>
+          <span slot="activator">
+            <v-icon v-if="recurring && event.recurring">repeat</v-icon>
+            <a :href="event.href" target="_blank">
+              {{ event.name }}
+            </a>
+          </span>
+
           <h2>{{ event.name }}</h2>
           <div>Created: {{ locale(event.created) }}</div>
           <div v-if="event.creator">Creator: {{ event.creator }}</div>
@@ -44,6 +48,7 @@ export default {
 
   computed: {
     busy() { return this.$store.state.busy; },
+    recurring() { return this.$store.state.recurring; },
 
     start() { return DateTime.fromISO(this.event.start); },
     end() { return DateTime.fromISO(this.event.end); },

@@ -31,6 +31,17 @@
             <v-list-tile-title>Busy slots</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        <v-list-tile>
+          <v-list-tile-action>
+            <v-switch v-model="recurring"/>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>
+              Recurring
+              <v-icon>repeat</v-icon>
+            </v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
       </v-list>
     </v-navigation-drawer>
 
@@ -64,6 +75,10 @@ export default {
     busy: {
       get() { return this.$store.state.busy; },
       set(value) { this.$store.commit('setBusy', value); }
+    },
+    recurring: {
+      get() { return this.$store.state.recurring; },
+      set(value) { this.$store.commit('setRecurring', value); }
     },
     date: {
       get() { return this.$store.state.date; },
