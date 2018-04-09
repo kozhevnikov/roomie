@@ -18,11 +18,12 @@ anonymous.get('/login', passport.authenticate('google', {
 
 anonymous.get('/login/callback', ctx => passport.authenticate('google', {
   successRedirect: ctx.session.redirect || '/',
-  failureRedirect: '/logout'
+  failureRedirect: '/login'
 })(ctx));
 
 anonymous.get('/logout', (ctx) => {
   ctx.logout();
+  ctx.session = null;
   ctx.redirect('/');
 });
 
