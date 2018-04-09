@@ -12,7 +12,8 @@ anonymous.get('/healthz', (ctx) => { ctx.status = 200; });
 
 /** @see http://www.passportjs.org/docs/google/#routes */
 anonymous.get('/login', passport.authenticate('google', {
-  scope: 'email'
+  scope: 'email',
+  prompt: 'select_account'
 }));
 
 anonymous.get('/login/callback', ctx => passport.authenticate('google', {
