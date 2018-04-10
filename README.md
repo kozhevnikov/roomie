@@ -8,7 +8,7 @@ Built with [Vue.js](https://vuejs.org/) and [Koa](http://koajs.com/).
 
 ```bash
 npm install
-npm run watch
+npm start
 open http://localhost:3000
 ```
 

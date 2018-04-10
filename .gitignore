@@ -1,6 +1,5 @@
 # Node.js
 node_modules/
-dist/
 
 # JetBrains
 .idea/
