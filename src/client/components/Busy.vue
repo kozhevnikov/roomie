@@ -1,5 +1,5 @@
 <template>
-  <tr v-if="busy" :class="{ past, current }">
+  <tr v-if="busy" :class="{ past, current, 'red accent-1': match }">
     <td class="time">
       <span :title="event.start">
         {{ startTime }}
@@ -48,6 +48,7 @@ export default {
 
   computed: {
     busy() { return this.$store.state.busy; },
+    search() { return this.$store.state.search; },
     recurring() { return this.$store.state.recurring; },
 
     start() { return DateTime.fromISO(this.event.start); },
@@ -57,7 +58,26 @@ export default {
     endTime() { return this.end.toLocaleString(DateTime.TIME_SIMPLE); },
 
     past() { return this.end < DateTime.local(); },
-    current() { return this.start < DateTime.local() && this.end > DateTime.local(); }
+    current() { return this.start < DateTime.local() && this.end > DateTime.local(); },
+
+    match() {
+      if (!this.search) return false;
+
+      const data = [
+        this.event.name,
+        this.event.conference,
+        this.event.creator ? this.event.creator.split('@')[0] : null,
+        this.event.organizer ? this.event.organizer.split('@')[0] : null,
+        ...this.event.attendees ? this.event.attendees.map(attendee => attendee.split('@')[0]) : []
+      ].filter(Boolean);
+
+      try {
+        const pattern = new RegExp(this.search, 'i');
+        return data.some(value => pattern.test(value));
+      } catch (error) {
+        return data.some(value => value.toLowerCase().includes(this.search.toLowerCase));
+      }
+    }
   },
 
   methods: {

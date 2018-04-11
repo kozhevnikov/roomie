@@ -57,12 +57,12 @@ exports.events = async (id, date = Date.now()) => {
       start: item.start.dateTime,
       end: item.end.dateTime,
       created: item.created || item.updated,
-      creator: item.creator ? item.creator.displayName || item.creator.email : null,
-      organizer: item.organizer ? item.organizer.displayName || item.organizer.email : null,
+      creator: item.creator ? item.creator.email : null,
+      organizer: item.organizer ? item.organizer.email : null,
       conference: item.conferenceData ? item.conferenceData.conferenceId : null,
       attendees: item.attendees ? item.attendees
         .filter(attendee => !attendee.resource)
-        .map(attendee => attendee.displayName || attendee.email) : null,
+        .map(attendee => attendee.email) : null,
       recurring: item.recurringEventId
     }))
   };

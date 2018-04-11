@@ -48,6 +48,10 @@
     <v-toolbar app fixed scroll-off-screen>
       <v-toolbar-side-icon @click="drawer = !drawer"/>
       <v-toolbar-title>{{ title }}</v-toolbar-title>
+      <v-spacer/>
+      <v-toolbar-items>
+        <v-text-field v-model="search" label="Search" append-icon="search" class="hidden-xs-only"/>
+      </v-toolbar-items>
     </v-toolbar>
 
     <v-content>
@@ -75,6 +79,10 @@ export default {
     busy: {
       get() { return this.$store.state.busy; },
       set(value) { this.$store.commit('setBusy', value); }
+    },
+    search: {
+      get() { return this.$store.state.search; },
+      set(value) { this.$store.commit('setSearch', value); }
     },
     recurring: {
       get() { return this.$store.state.recurring; },

@@ -10,6 +10,7 @@ export default new Vuex.Store({
   state: {
     free: true,
     busy: true,
+    search: null,
     recurring: false,
     date: DateTime.local().toISODate(),
     rooms: new Map()
@@ -18,6 +19,7 @@ export default new Vuex.Store({
   mutations: {
     setFree(state, value) { state.free = value; },
     setBusy(state, value) { state.busy = value; },
+    setSearch(state, value) { state.search = value; },
     setRecurring(state, value) { state.recurring = value; },
     setDate(state, value) { state.date = value; },
     setRoom(state, { key, room }) { state.rooms.set(key, room); }
