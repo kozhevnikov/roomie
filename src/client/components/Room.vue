@@ -102,16 +102,16 @@ export default {
     width: 100%;
   }
 
-  .card {
+  .v-card {
     margin: 8px;
   }
 
-  .card__title {
+  .v-card__title {
     word-break: break-all;
     word-break: break-word;
   }
 
-  .card__text {
+  .v-card__text {
     padding-top: 0;
   }
 </style>
